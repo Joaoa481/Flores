@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Para ti, flor de mis mañanas</title>
+<meta name="color-scheme" content="light dark">
+<style>
+  :root{
+    --bg-1: #fde9f3;
+    --bg-2: #e8f7ff;
+    --glass: rgba(255,255,255,0.55);
+    --ink: #2b2d42;
+    --accent: #ff7aa8;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-1: #0f0f12;
+      --bg-2: #1a2030;
+      --glass: rgba(20,22,34,0.55);
+      --ink: #eaeaf0;
+      --accent: #ff8fbd;
+    }
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{
+    height: 100%;
+    margin: 0;
+    font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(1200px 800px at 20% 10%, var(--bg-1), transparent 60%),
+                radial-gradient(1000px 1000px at 80% 90%, var(--bg-2), transparent 60%),
+                linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    overflow: hidden;
+  }
+
+  /* Lluvia de flores */
+  .sky{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .flower{
+    position: absolute;
+    left: var(--x, 50%);
+    bottom: -15vh;
+    width: calc(var(--size, 56) * 1px);
+    height: calc(var(--size, 56) * 1px);
+    opacity: 0.9;
+    filter: hue-rotate(var(--hue, 0deg)) saturate(1.2) drop-shadow(0 6px 8px rgba(0,0,0,.2));
+    animation: floatUp var(--dur, 14s) linear infinite var(--delay, 0s);
+    will-change: transform;
+  }
+
+  .flower use{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bloom 5.5s ease-in-out infinite alternate var(--delay, 0s),
+               sway 7s ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes floatUp{
+    from{ transform: translateY(0) }
+    to  { transform: translateY(-125vh) }
+  }
+  @keyframes bloom{
+    0%  { transform: scale(0.6) rotate(0deg) }
+    30% { transform: scale(1.0) rotate(8deg) }
+    60% { transform: scale(0.95) rotate(-6deg) }
+    100%{ transform: scale(1.02) rotate(0deg) }
+  }
+  @keyframes sway{
+    0%   { translate: 0 0 }
+    50%  { translate: 10% 0 }
+    100% { translate: 0 0 }
+  }
+
+  /* Tarjeta de mensaje */
+  main{
+    position: relative;
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: clamp(16px, 4vmin, 32px);
+  }
+
+  .card{
+    width: min(780px, 90vw);
+    padding: clamp(18px, 4vmin, 32px);
+    border-radius: 22px;
+    background: var(--glass);
+    backdrop-filter: blur(8px) saturate(130%);
+    box-shadow:
+      0 10px 30px rgba(0,0,0,.12),
+      inset 0 0 0 1px rgba(255,255,255,.35);
+    animation: pop-in .8s ease-out both;
+  }
+  @keyframes pop-in{
+    from{ transform: translateY(8px) scale(.98); opacity: 0 }
+    to  { transform: translateY(0) scale(1); opacity: 1 }
+  }
+
+  h1{
+    margin: 0 0 .5rem 0;
+    font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: .5px;
+    text-wrap: balance;
+  }
+
+  p{
+    font-size: clamp(1rem, 2.1vw, 1.15rem);
+    line-height: 1.6;
+    margin: .25rem 0 0 0;
+  }
+
+  .highlight{
+    display: inline-block;
+    background:
+      linear-gradient(120deg, rgba(255,182,193,.35), rgba(255,255,255,0) 60%);
+    padding: .08em .2em;
+    border-radius: .35em;
+  }
+
+  .signature{
+    margin-top: 1.1rem;
+    font-style: italic;
+    opacity: .8;
+  }
+
+  .cta{
+    margin-top: 1rem;
+    display: inline-block;
+    padding: .7rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.2));
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: .3px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(0,0,0,.12);
+  }
+
+  /* Respeto a accesibilidad */
+  @media (prefers-reduced-motion: reduce){
+    .flower, .flower use, .card{ animation: none !important }
+  }
+
+  /* Pequeño brillo en el título */
+  .shine{
+    background-image: linear-gradient(90deg, currentColor 0%, currentColor 40%, rgba(255,255,255,.7) 50%, currentColor 60%, currentColor 100%);
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-size: 220% 100%;
+    animation: shine 5s ease-in-out infinite;
+  }
+  @keyframes shine{
+    0%, 100% { background-position: -120% 0; }
+    50%      { background-position: 120% 0; }
+  }
+</style>
+</head>
+<body>
+  <!-- Sprite SVG con un símbolo de flor reutilizable -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="petalGrad" cx="50%" cy="50%" r="60%">
+        <stop offset="0%"  stop-color="#ffffff" stop-opacity=".95"/>
+        <stop offset="55%" stop-color="#ffd1e4" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#ff9ec4" stop-opacity=".95"/>
+      </radialGradient>
+      <radialGradient id="centerGrad" cx="50%" cy="50%" r="55%">
+        <stop offset="0%"  stop-color="#fff7a0"/>
+        <stop offset="70%" stop-color="#ffcf4a"/>
+        <stop offset="100%" stop-color="#ffb300"/>
+      </radialGradient>
+
+      <symbol id="flowerSymbol" viewBox="0 0 100 100">
+        <!-- pétalos -->
+        <g>
+          <!-- 6 pétalos elípticos rotados -->
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(0,50,50) translate(0,8)"/>
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(60,50,50) translate(0,8)"/>
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(120,50,50) translate(0,8)"/>
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(180,50,50) translate(0,8)"/>
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(240,50,50) translate(0,8)"/>
+          <ellipse cx="50" cy="22" rx="15" ry="24" fill="url(#petalGrad)" stroke="#ff99c2" stroke-opacity=".35" transform="rotate(300,50,50) translate(0,8)"/>
+        </g>
+        <!-- centro -->
+        <circle cx="50" cy="50" r="13" fill="url(#centerGrad)" stroke="#f2a900" stroke-opacity=".4"/>
+        <!-- brillito -->
+        <circle cx="45" cy="45" r="4" fill="#ffffff" fill-opacity=".9"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Capa de flores animadas -->
+  <div class="sky" aria-hidden="true">
+    <!-- Cambia variables CSS para distribuir, tamaño, color (hue) y ritmos -->
+    <svg class="flower" style="--x: 6%;  --size: 70; --hue: 330deg; --delay: 0.2s; --dur: 16s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 16%; --size: 48; --hue: 0deg;   --delay: 1.2s; --dur: 13s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 25%; --size: 60; --hue: 290deg; --delay: 2.4s; --dur: 18s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 35%; --size: 52; --hue: 20deg;  --delay: 0.9s; --dur: 15s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 44%; --size: 40; --hue: 355deg; --delay: 3.1s; --dur: 12.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 52%; --size: 66; --hue: 310deg; --delay: 1.7s; --dur: 17s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 60%; --size: 54; --hue: 260deg; --delay: 2.9s; --dur: 14.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 70%; --size: 72; --hue: 330deg; --delay: 0.6s; --dur: 19s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 78%; --size: 46; --hue: 15deg;  --delay: 2.2s; --dur: 13.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 86%; --size: 58; --hue: 285deg; --delay: 3.4s; --dur: 16.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 92%; --size: 44; --hue: 345deg; --delay: 1.1s; --dur: 12s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 12%; --size: 64; --hue: 300deg; --delay: 2.0s; --dur: 18.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 48%; --size: 38; --hue: 25deg;  --delay: 0.3s; --dur: 11.5s"><use href="#flowerSymbol"/></svg>
+    <svg class="flower" style="--x: 74%; --size: 62; --hue: 315deg; --delay: 1.5s; --dur: 17.5s"><use href="#flowerSymbol"/></svg>
+  </div>
+
+  <!-- Contenido principal -->
+  <main>
+    <section class="card" role="region" aria-label="Mensaje para ti">
+      <h1 class="shine">Para ti, <span class="highlight">flor de mis mañanas</span> ✨</h1>
+
+      <!-- ✍️ Edita el mensaje a tu gusto -->
+      <p>
+        Eres mi <em>milagro cotidiano</em>: la risa que riega mi alma y el abrazo
+        que le da forma al hogar. Si el mundo fuese un jardín, tú serías la
+        <strong>primavera</strong> que lo despierta.
+      </p>
+      <p>
+        Que estas flores bailen contigo y te recuerden que, si una nube se atreve
+        a tapar el sol, yo me convierto en <em>brisa</em> para despejar tu cielo.
+      </p>
+      <p>
+        Te quiero con <em>paciencia de árbol</em> y <em>prisa de cometa</em>; con la calma de la luna
+        y el latido travieso de las estrellas.
+      </p>
+      <p class="signature">P. D. Si las flores pudieran hablar, te pedirían tips de belleza… (yo también).</p>
+
+      <!-- Opcional: un detallito de acción, por si lo envías en vivo -->
+      <a class="cta" href="#" onclick="confetti();return false;" aria-label="Enviar un pequeño confeti de amor">Un poquito más de magia</a>
+    </section>
+  </main>
+
+  <!-- Mini confeti discreto (sin librerías externas) -->
+  <script>
+    function confetti(){
+      const n = 22;
+      for(let i=0;i<n;i++){
+        const s = document.createElement('div');
+        const size = Math.floor(6 + Math.random()*10);
+        s.style.cssText = `
+          position: fixed;
+          left: ${Math.random()*100}vw;
+          top: -10px;
+          width: ${size}px; height: ${size}px;
+          border-radius: 50%;
+          background: hsl(${Math.random()*360}, 85%, 70%);
+          box-shadow: 0 2px 8px rgba(0,0,0,.15);
+          pointer-events:none;
+          z-index: 10;
+          transform: translateY(0);
+          transition: transform ${1200+Math.random()*1200}ms cubic-bezier(.2,.7,.2,1), opacity 300ms ease ${900+Math.random()*900}ms;
+          opacity: 1;
+        `;
+        document.body.appendChild(s);
+        requestAnimationFrame(()=>{
+          s.style.transform = `translateY(${80+Math.random()*120}vh) translateX(${(-30+Math.random()*60)}vw) rotate(${Math.random()*720}deg)`;
+          s.style.opacity = 0;
+        });
+        setTimeout(()=> s.remove(), 2600);
+      }
+    }
+  </script>
+</body>
+</html>
