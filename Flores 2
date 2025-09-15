@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Para mi esposa: donde florece mi cielo</title>
+<meta name="color-scheme" content="dark light">
+<style>
+  :root{
+    /* Espacio */
+    --space-1:#060914; --space-2:#0b1222;
+    /* Flor amarilla */
+    --petal-a:#fff7a1; --petal-b:#ffd54f; --petal-c:#ffc107;
+    --center-a:#fff3cd; --center-b:#f9a825; --center-c:#f57f17;
+    --stem:#2e7d32; --leaf:#43a047;
+    /* Tipografía */
+    --ink:#eef3ff;
+    --glass:rgba(255,255,255,.08);
+  }
+
+  @media (prefers-color-scheme: light){
+    :root{ --ink:#0e1020; --glass:rgba(255,255,255,.55) }
+  }
+
+  *{ box-sizing:border-box }
+  html,body{ height:100%; margin:0; font-family: ui-rounded, system-ui, "Segoe UI", Roboto, Arial, sans-serif; color:var(--ink); background: radial-gradient(1200px 800px at 20% 10%, var(--space-2), transparent 60%), linear-gradient(180deg, var(--space-1), var(--space-2)); overflow:hidden }
+
+  /* Lienzo de estrellas/cometas/fuegos */
+  canvas#space{ position:fixed; inset:0; z-index:-1; display:block; }
+
+  main{ min-height:100%; display:grid; place-items:center; padding:clamp(16px,4vmin,32px) }
+
+  .card{
+    display:grid; gap:16px; align-items:center; justify-items:center;
+    width:min(980px, 94vw);
+    padding:clamp(18px,4vmin,28px);
+    background:var(--glass); backdrop-filter: blur(8px) saturate(140%);
+    border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.25);
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(1.6rem, 4.2vw, 2.6rem);
+    line-height:1.15; letter-spacing:.4px; text-align:center;
+  }
+  p{ margin:0; text-align:center; font-size:clamp(1rem, 2.2vw, 1.2rem); line-height:1.7 }
+  .signature{ opacity:.85; font-style:italic; margin-top:.4rem }
+
+  /* Botón para repetir fuegos */
+  .cta{
+    margin-top:.2rem; display:inline-block; padding:.7rem 1rem; border-radius:999px;
+    border:1px solid rgba(255,255,255,.25); background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.08));
+    color:inherit; text-decoration:none; font-weight:600; letter-spacing:.3px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(0,0,0,.35) }
+
+  /* Flor: crece + florece */
+  .flower-wrap{ width:min(420px, 70vw); aspect-ratio: 3/4; }
+  svg#flower{ width:100%; height:100%; overflow:visible; filter: drop-shadow(0 12px 24px rgba(0,0,0,.35)); }
+  #flower .stem, #flower .leaf{ transform-box: fill-box; transform-origin: bottom center }
+  #flower .petal, #flower .center{ transform-box: fill-box; transform-origin: 50% 60% }
+
+  /* Animaciones */
+  .grow{ animation: grow 6.5s cubic-bezier(.2,.8,.2,1) both }
+  .bloom{ animation: bloom 5.4s ease-in-out .9s both }
+  .leaf-in{ animation: leafIn 4.2s ease-out .6s both }
+
+  @keyframes grow{
+    0%{ transform: scaleY(.1) translateY(40%); opacity:.0 }
+    40%{ opacity:1 }
+    100%{ transform: scaleY(1) translateY(0) }
+  }
+  @keyframes leafIn{
+    0%{ transform: scale(0) rotate(-20deg); opacity:0 }
+    60%{ transform: scale(1.06) rotate(4deg); opacity:1 }
+    100%{ transform: scale(1) rotate(0) }
+  }
+  @keyframes bloom{
+    0%{ transform: scale(.1) rotate(-6deg) }
+    45%{ transform: scale(1.05) rotate(6deg) }
+    70%{ transform: scale(.98) rotate(-3deg) }
+    100%{ transform: scale(1) rotate(0) }
+  }
+
+  /* Accesibilidad: menos movimiento */
+  @media (prefers-reduced-motion: reduce){
+    .grow,.bloom,.leaf-in{ animation:none !important }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="space" aria-hidden="true"></canvas>
+
+<main>
+  <section class="card" role="region" aria-label="Mensaje para mi esposa">
+    <!-- Flor amarilla que crece -->
+    <div class="flower-wrap">
+      <svg id="flower" viewBox="0 0 200 260" aria-label="Flor amarilla">
+        <!-- Tallo -->
+        <path class="stem grow" d="M100,250 C102,200 98,160 100,110" stroke="var(--stem)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- Hojas -->
+        <path class="leaf leaf-in" d="M95,170 C70,160 60,145 58,134 C70,140 85,142 100,146" fill="var(--leaf)"/>
+        <path class="leaf leaf-in" d="M105,160 C130,150 140,135 142,124 C130,130 115,132 100,136" fill="var(--leaf)"/>
+        <!-- Cabeza de flor (pétalos amarillos) -->
+        <g class="bloom">
+          <defs>
+            <radialGradient id="petalGrad" cx="50%" cy="40%" r="70%">
+              <stop offset="0%"  stop-color="var(--petal-a)"/>
+              <stop offset="55%" stop-color="var(--petal-b)"/>
+              <stop offset="100%" stop-color="var(--petal-c)"/>
+            </radialGradient>
+            <radialGradient id="centerGrad" cx="45%" cy="45%" r="55%">
+              <stop offset="0%"  stop-color="var(--center-a)"/>
+              <stop offset="65%" stop-color="var(--center-b)"/>
+              <stop offset="100%" stop-color="var(--center-c)"/>
+            </radialGradient>
+          </defs>
+
+          <!-- 8 pétalos -->
+          <g transform="translate(100,90)">
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(0) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(45) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(90) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(135) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(180) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(225) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(270) translate(0,-26)"/>
+            <ellipse class="petal" rx="16" ry="32" fill="url(#petalGrad)" transform="rotate(315) translate(0,-26)"/>
+          </g>
+          <!-- Centro -->
+          <circle class="center" cx="100" cy="90" r="14" fill="url(#centerGrad)" />
+          <circle cx="94" cy="86" r="3" fill="#fff" opacity=".9"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ❤️ Mensaje súper tierno (edítalo a gusto) -->
+    <h1>Amor mío, donde tú estás, <br>la noche aprende a florecer.</h1>
+    <p>
+      Hoy planto esta flor amarilla en tu cielo: crece al ritmo de tu risa,
+      se inclina con tu ternura y perfuma cada instante de nuestro hogar.
+      Si pasan cometas, que te encuentren sonriendo; si cae la noche,
+      yo enciendo estrellas en tu ventana.
+    </p>
+    <p class="signature">Gracias por ser mi refugio, mi travesura y mi mañana. — Tu compañero de vida</p>
+
+    <a class="cta" href="#" onclick="replayFireworks();return false;">Repetir fuegos artificiales ✨</a>
+  </section>
+</main>
+
+<script>
+/* ====== CIELO: estrellas, cometas y fuegos en un solo canvas ====== */
+(() => {
+  const canvas = document.getElementById('space');
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr = Math.max(1, window.devicePixelRatio || 1);
+  let stars = [], comets = [], rockets = [], particles = [];
+  let t0 = 0, rafId = null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    w = canvas.width = Math.floor(innerWidth * dpr);
+    h = canvas.height = Math.floor(innerHeight * dpr);
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+  }
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+
+  // Crear campo de estrellas
+  function initStars(){
+    const count = Math.floor((innerWidth * innerHeight)/5000);
+    stars = Array.from({length: count}, () => {
+      return {
+        x: Math.random()*w, y: Math.random()*h,
+        r: Math.random()*1.6 + 0.3,
+        tw: Math.random()*Math.PI*2,
+        s: 0.2 + Math.random()*0.8
+      };
+    });
+  }
+  initStars();
+
+  // Lanzar cometas de vez en cuando
+  function maybeComet(dt){
+    if (Math.random() < 0.002 * dt/16) {
+      const fromLeft = Math.random() < 0.5;
+      const speed = (80 + Math.random()*120) * dpr;
+      const angle = fromLeft ? (Math.random()*0.4 - 0.2) : (Math.PI + Math.random()*0.4 - 0.2);
+      comets.push({
+        x: fromLeft ? -40*dpr : w + 40*dpr,
+        y: Math.random()*h*0.6 + h*0.05,
+        vx: Math.cos(angle)*speed,
+        vy: Math.sin(angle)*speed*0.4,
+        life: 0, max: 3200 + Math.random()*2200
+      });
+    }
+  }
+
+  // Fuegos artificiales (cohetes y partículas)
+  function launchFirework(){
+    const targetX = (0.15 + Math.random()*0.7) * w;
+    const targetY = (0.15 + Math.random()*0.45) * h;
+    const x = Math.random()*w, y = h + 10;
+    rockets.push({ x, y, tx: targetX, ty: targetY, vx:(targetX-x)/50, vy:-Math.random()*8*dpr - 6*dpr, life:0 });
+  }
+  function burst(x, y){
+    const n = 110;
+    for(let i=0;i<n;i++){
+      const a = (Math.PI*2)*Math.random();
+      const speed = (1 + Math.random()*3.2) * dpr;
+      particles.push({
+        x, y,
+        vx: Math.cos(a)*speed, vy: Math.sin(a)*speed,
+        life: 0, max: 1800 + Math.random()*1200,
+        color: `hsl(${Math.floor(Math.random()*360)}, 90%, 65%)`
+      });
+    }
+  }
+
+  // Programa el final con fuegos
+  let showFinal = !reduceMotion;
+  if (showFinal){
+    setTimeout(() => { // dispara durante ~6s
+      let shots = 0;
+      const iv = setInterval(() => {
+        launchFirework(); shots++;
+        if (shots > 8) clearInterval(iv);
+      }, 700);
+    }, 10000); // ~10s después de cargar
+  }
+
+  // Permitir repetir
+  window.replayFireworks = function(){
+    if (reduceMotion) return;
+    let shots = 0;
+    const iv = setInterval(() => {
+      launchFirework(); shots++;
+      if (shots > 8) clearInterval(iv);
+    }, 700);
+  }
+
+  function step(ts){
+    const dt = Math.min(50, ts
