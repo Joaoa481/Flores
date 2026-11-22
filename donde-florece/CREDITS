@@ -1,0 +1,24 @@
+Donde florece mi cielo · third-party assets and sources
+
+## Music samples (CC0; credit not required, given with thanks)
+- VS Chamber Orchestra: Community Edition (Versilian Studios), Versilian Community Sample Library (Versilian Studios),
+  FreePats project (freepats.zenvoid.org), played through the Lemo-Opuscar library's core/audio/sampler.py.
+  Instruments: harp, flute, glockenspiel, hand chimes, glass harp, vibraphone, violins, violins tremolo, violas,
+  cellos, contrabass, timpani, suspended cymbal.
+- Crickets, wind, rain and the air of the moving light are procedural (core/audio/sfx.py and mix.py).
+
+## Font (SIL Open Font License 1.1; licence text in fonts/OFL-Lora.txt)
+- Lora (variable, Bold instance), The Lora Project Authors, https://github.com/google/fonts/tree/main/ofl/lora
+  Used for the particle title.
+
+## Code
+- engine.py is adapted from the Firefly Pointillism demo of Lemo-Opuscar (https://github.com/lemomo-ai/lemo-opuscar),
+  MIT License, Copyright (c) 2026 Lemomo (LemoLab). The MIT licence text: https://github.com/lemomo-ai/lemo-opuscar/blob/main/LICENSES/MIT.txt
+  The style follows its STYLE.md (CC BY-NC 4.0). film.py, timeline.py and mix.py were written for this film.
+- numpy, scipy, Pillow, soundfile; ffmpeg for encoding.
+
+## Images, models
+- None. Every point is computed in code; no photographs, footage, voice or AI-generated images.
+
+## Words
+- The title line comes from the user's own page in this repository ("Flores 2": "Amor mío, donde tú estás, la noche aprende a florecer.").
